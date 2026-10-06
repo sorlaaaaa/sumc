@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#fbf7ee" />
+  <title>选择你的川传生活 · 四川传媒学院迎新探索</title>
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       页 0｜加载 / 片头
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-intro" aria-label="片头">
+    <div class="intro-black">
+      <div class="intro-clapper" id="introClapper">
+        <div class="clapper-top"></div>
+        <div class="clapper-bottom">
+          <span class="clapper-scene">场 1</span>
+          <span class="clapper-take">镜 1</span>
+        </div>
+      </div>
+      <div class="intro-school" id="introSchool">四川传媒学院</div>
+      <div class="intro-tagline" id="introTagline">新学期，第一镜。</div>
+
+      <div class="intro-map-glow" id="introMapGlow">
+        <div class="intro-map-silhouette"></div>
+      </div>
+
+      <div class="film-loader" id="filmLoader" aria-hidden="true">
+        <div class="film-strip">
+          <span class="sprocket"></span><span class="sprocket"></span><span class="sprocket"></span>
+          <span class="sprocket"></span><span class="sprocket"></span><span class="sprocket"></span>
+          <span class="sprocket"></span><span class="sprocket"></span><span class="sprocket"></span>
+        </div>
+        <div class="film-fill" id="filmFill"></div>
+        <div class="film-caption" id="filmCaption">过卷中…</div>
+      </div>
+
+      <button class="btn btn-primary intro-skip" id="btnSkipIntro" type="button">开拍</button>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       页 1｜片头选择（开场白）
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-setup" aria-label="开场选择">
+    <div class="setup-stage">
+      <div class="setup-ph" data-slot="bg-opening">
+        <img src="assets/scenes/gate_east.jpg" alt="东区大门" />
+      </div>
+
+      <div class="guide-box">
+        <div class="guide-ph" data-slot="char-chuanzai">
+          <img src="assets/chars/chuanzai.jpg" alt="川崽" />
+        </div>
+        <div class="guide-bubble" id="guideBubble">
+          <p>欢迎来到四川传媒学院。</p>
+          <p>川传分东西两个校区，东区像老片场，西区是影视硅谷。</p>
+          <p>你接下来只有 <b>十二次</b> 行动机会——点哪里，你的川传生活就往哪边去。</p>
+        </div>
+      </div>
+
+      <div class="setup-form">
+        <fieldset class="setup-field">
+          <legend><span class="chips-label">01 · 怎么称呼你</span></legend>
+          <input type="text" id="inputNickname" maxlength="10" placeholder="新川传人" />
+        </fieldset>
+
+        <fieldset class="setup-field">
+          <legend><span class="chips-label">02 · 你更像哪种镜头里的人</span></legend>
+          <div class="chips" id="chipsArchetype" role="radiogroup"></div>
+        </fieldset>
+
+        <fieldset class="setup-field">
+          <legend><span class="chips-label">03 · 你住哪边</span></legend>
+          <div class="chips" id="chipsResidence" role="radiogroup"></div>
+        </fieldset>
+      </div>
+
+      <div class="setup-actions">
+        <div class="gift-tip" id="giftTip" hidden>
+          <span class="gift-tip-label">🎁 迎新礼包贴士</span>
+          <span class="gift-tip-text">学生事务中心可录宿舍密码锁指纹；东西区间有校车。</span>
+        </div>
+        <button class="btn btn-primary" id="btnEnterMap" type="button" disabled>进校 · 看地图</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       页 2｜主界面：校园平面图（核心）
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-map" aria-label="校园地图">
+    <header class="topbar">
+      <div class="brand">
+        <span class="crest-ph" data-slot="crest"><img src="assets/crest.png" alt="校徽" /></span>
+        <h1 class="brand-title">选择你的川传生活</h1>
+      </div>
+      <div class="topbar-right">
+        <button class="icon-btn" id="btnMute" type="button" title="音量">🔊</button>
+        <button class="icon-btn" id="btnSettings" type="button" title="设置">⚙</button>
+      </div>
+    </header>
+
+    <div class="map-layout">
+      <!-- 左侧栏：属性 + 行动点（桌面） -->
+      <aside class="sidepanel sidepanel-left" id="sideLeft">
+        <div class="panel-section">
+          <div class="panel-title">属性 <span class="panel-sub">胶片五格</span></div>
+          <div class="attr-list" id="attrList"></div>
+        </div>
+        <div class="panel-section">
+          <div class="panel-title">行动点</div>
+          <div class="action-meter">
+            <span class="action-dots" id="actionDots"></span>
+            <span class="action-count" id="actionCount">12 / 12</span>
+          </div>
+          <p class="panel-hint">首次探索一个建筑消耗 1 点；回头再点不耗点。</p>
+        </div>
+      </aside>
+
+      <!-- 地图舞台 -->
+      <main class="map-stage" id="mapStage">
+        <div class="map-toolbar">
+          <div class="region-tabs" id="regionTabs">
+            <button class="region-tab active" data-region="east" type="button">东区</button>
+            <button class="region-tab" data-region="west" type="button">西区</button>
+          </div>
+          <div class="map-legend">
+            <span class="legend-item"><i class="dot dot-new"></i>未探索</span>
+            <span class="legend-item"><i class="dot dot-done"></i>已探索</span>
+          </div>
+        </div>
+
+        <div class="map-viewport" id="mapViewport">
+          <div class="map-canvas" id="mapCanvas">
+            <!-- 地图底图占位（供图后替换背景） -->
+            <div class="map-bg" id="mapBg">
+              <img id="mapImg" alt="" />
+              <span class="ph-tag" id="mapPh">占位图 · 校园平面图（东区）</span>
+            </div>
+            <!-- 建筑热区由 app.js 注入 -->
+            <div class="map-hotspots" id="mapHotspots"></div>
+          </div>
+        </div>
+
+        <!-- 悬浮提示 -->
+        <div class="map-tooltip" id="mapTooltip" hidden></div>
+      </main>
+
+      <!-- 右侧栏：今日场记 + 快捷图鉴（桌面） -->
+      <aside class="sidepanel sidepanel-right" id="sideRight">
+        <div class="panel-section">
+          <div class="panel-title">今日场记</div>
+          <div class="daily-log" id="dailyLog"></div>
+        </div>
+        <div class="panel-section">
+          <button class="btn btn-ghost btn-block" id="btnCollection" type="button">📔 川传手账</button>
+          <button class="btn btn-ghost btn-block" id="btnSettle" type="button">🎬 收工结算</button>
+        </div>
+      </aside>
+    </div>
+
+    <!-- 底部胶囊（手机） -->
+    <footer class="hud-bottom" id="hudBottom">
+      <div class="hud-chip" id="hudNickname">新川传人</div>
+      <div class="hud-chip hud-attr" id="hudTopAttr">—</div>
+      <div class="hud-dots" id="hudDots"></div>
+      <button class="hud-btn" id="btnCollectionM" type="button">📔</button>
+      <button class="hud-btn" id="btnSettleM" type="button">收工</button>
+    </footer>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       页 3｜建筑内：对话探索（图文 VN）
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="screen screen-overlay" id="screen-event" aria-label="建筑内对话">
+    <div class="vn-card" id="vnCard">
+      <div class="vn-scene" id="vnScene">
+        <div class="vn-ph" data-slot="scene-building">
+          <img id="vnSceneImg" alt="" />
+          <span class="ph-tag" id="vnPhTag">占位图 · 建筑内景</span>
+          <span class="ph-note" id="vnPhNote">场景图</span>
+        </div>
+        <div class="vn-char" id="vnChar" hidden>
+          <div class="vn-char-ph" data-slot="char-npc">
+            <img src="assets/chars/npc.jpg" alt="人物" />
+          </div>
+        </div>
+        <span class="vn-rec" aria-hidden="true">● REC</span>
+      </div>
+
+      <div class="vn-board">
+        <div class="vn-slate">
+          <span class="vn-slate-item">场 <b id="vnSceneNo">—</b></span>
+          <span class="vn-slate-item">地 <b id="vnPlace">—</b></span>
+          <span class="vn-slate-item">角 <b id="vnRole">—</b></span>
+        </div>
+        <div class="vn-dialog" id="vnDialog"></div>
+        <div class="vn-choices" id="vnChoices"></div>
+        <div class="vn-progress" id="vnProgress">
+          <span class="vn-beat">空镜</span><span class="vn-beat">遭遇</span><span class="vn-beat">选择</span><span class="vn-beat">收获</span>
+        </div>
+        <button class="vn-next" id="vnNext" type="button">下一条 ▸</button>
+        <button class="vn-close" id="vnClose" type="button" aria-label="关闭">✕</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       页 4｜图鉴「川传手账」
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="screen screen-overlay" id="screen-collection" aria-label="川传手账">
+    <div class="handbook">
+      <header class="handbook-head">
+        <h2>川传手账</h2>
+        <div class="handbook-tabs" id="handbookTabs">
+          <button class="hb-tab active" data-tab="landmark" type="button">地标</button>
+          <button class="hb-tab" data-tab="tips" type="button">贴士</button>
+          <button class="hb-tab" data-tab="alumni" type="button">校友</button>
+        </div>
+        <button class="vn-close" id="btnCloseCollection" type="button" aria-label="关闭">✕</button>
+      </header>
+      <div class="handbook-body">
+        <div class="hb-search" id="hbSearchWrap" hidden>
+          <input type="search" id="hbSearch" placeholder="搜索贴士…" />
+        </div>
+        <div class="hb-grid" id="hbGrid"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       页 5｜收工 / 结局演出
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="screen" id="screen-ending" aria-label="结局">
+    <div class="ending-stage" id="endingStage">
+      <div class="ending-slates" id="endingSlates"></div>
+      <div class="ending-card" id="endingCard" hidden></div>
+    </div>
+    <div class="ending-actions" id="endingActions" hidden></div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       页 6｜分享图（竖版 3:4）
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="screen screen-overlay" id="screen-share" aria-label="分享图">
+    <div class="share-wrap">
+      <div class="share-card" id="shareCard">
+        <div class="share-head">
+          <span class="share-crest" data-slot="crest"><img src="assets/crest.png" alt="校徽" /></span>
+          <span class="share-brand">四川传媒学院 · 选择你的川传生活</span>
+        </div>
+        <div class="share-nick" id="shareNick"></div>
+        <div class="share-title" id="shareTitle"></div>
+        <div class="share-tagline" id="shareTagline"></div>
+        <div class="share-attrs" id="shareAttrs"></div>
+        <div class="share-alumni" id="shareAlumni"></div>
+        <div class="share-foot">
+          <div class="share-qr" data-slot="qr">
+            <span>二维码位</span>
+          </div>
+          <div class="share-motto">博学笃行 · 德艺双馨</div>
+        </div>
+      </div>
+      <div class="share-actions">
+        <button class="btn btn-primary" id="btnDownload" type="button">保存图片</button>
+        <button class="btn btn-ghost" id="btnShareClose" type="button">关闭</button>
+      </div>
+      <canvas id="shareCanvas" hidden></canvas>
+    </div>
+  </section>
+
+  <!-- ═══════════════════════════════════════════════════════════
+       彩蛋弹窗｜园校合一 · 产教融合
+  ═══════════════════════════════════════════════════════════ -->
+  <section class="screen screen-overlay" id="screen-easter" aria-label="园校合一彩蛋">
+    <div class="easter-modal">
+      <div class="easter-ph"><img src="assets/easter/yuanxiao.jpg" alt="园校合一 · 产教融合" /></div>
+      <div class="easter-title">🎬 彩蛋 · 园校合一，产教融合</div>
+      <div class="easter-text">摄影棚、融媒体、博物馆，你都走了一遍——川传的校园，本来就是一个片场。</div>
+      <button class="btn btn-primary" id="btnEasterClose" type="button">继续 ▸</button>
+    </div>
+  </section>
+
+  <!-- 轻提示 -->
+  <div class="toast" id="toast" hidden></div>
+
+  <script src="js/data.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
